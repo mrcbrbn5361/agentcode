@@ -12,6 +12,8 @@ metadata:
 
 # AgentCode - Akıllı Multi-Model Coding Agent 🚀
 
+[![OpenAgentSkill](https://www.openagentskill.com/api/badge/agentcode)](https://www.openagentskill.com/skills/agentcode)
+
 > 7 ücretsiz AI modelinin gücünü tek bir ajan da birleştiren akıllı coding agent'ı
 
 ## 🎯 Ne Yapar?

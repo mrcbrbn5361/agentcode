@@ -2,9 +2,10 @@
 
 > 7 ücretsiz AI modelinin gücünü tek bir çatı altında toplayan akıllı coding agent'ı
 
+[![OpenAgentSkill](https://www.openagentskill.com/api/badge/agentcode)](https://www.openagentskill.com/skills/agentcode)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenCode Skills](https://img.shields.io/badge/OpenCode-Skills-blue.svg)](https://opencode.ai/docs/skills/)
-[![Version](https://img.shields.io/badge/version-0.0.1-green.svg)](https://github.com/username/agentcode)
+[![Version](https://img.shields.io/badge/version-0.0.1-green.svg)](https://github.com/mrcbrbn5361/agentcode/releases/tag/v0.0.1)
 
 ## 🎯 Nedir?
 
