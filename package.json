@@ -1,0 +1,34 @@
+{
+  "name": "opencode-skill-agentcode",
+  "version": "0.0.1",
+  "description": "7 ücretsiz modelin en iyi yeteneklerini tek çatı altında toplayan akıllı coding agent'ı",
+  "keywords": [
+    "opencode",
+    "skill",
+    "coding-agent",
+    "ai",
+    "multi-model",
+    "free-models"
+  ],
+  "author": "AgentCode Contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/username/agentcode",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/agentcode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/agentcode/issues"
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "opencode": {
+    "skill": {
+      "name": "agentcode",
+      "description": "7 ücretsiz modelin en iyi yeteneklerini tek çatı altında toplayan akıllı coding agent'ı"
+    }
+  }
+}
