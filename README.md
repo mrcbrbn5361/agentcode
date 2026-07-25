@@ -1,6 +1,14 @@
 # AgentCode - Smart Multi-Model Coding Agent
 
-Smart routing across 6 verified free AI models for OpenCode. MIT License.
+Intelligent routing across 7 verified free AI models with system detection and multi-language support. MIT License.
+
+## What's New in v0.0.2
+
+- **System Model Detection**: Automatically detect AI models available on your system
+- **Interactive Setup Wizard**: Choose models based on your needs and detected capabilities
+- **Session Management**: Persistent sessions with context preservation
+- **Multi-Language Support**: 14+ programming languages with templates
+- **OpenClaw-Inspired Features**: Dynamic model switching and progress tracking
 
 ## Installation
 
@@ -30,6 +38,115 @@ info = get_model_info(ModelType.MIMO)
 print(info["name"])  # "MiMo-V2.5"
 ```
 
+## System Detection
+
+AgentCode automatically detects AI models available on your system:
+
+```python
+from detector import detect_system_models, print_detection_report
+
+# Detect all available models
+models = detect_system_models()
+
+# Print detection report
+print_detection_report(models)
+```
+
+### Detected Systems
+
+| Category | Examples |
+|----------|----------|
+| CLI Tools | OpenAI CLI, Anthropic CLI, Ollama, llama.cpp |
+| IDE Extensions | VS Code Copilot, Cursor, Windsurf, JetBrains AI |
+| Cloud APIs | OpenAI, Anthropic, Google, DeepSeek, Mistral |
+| Local Models | Ollama models, LM Studio, quantized models |
+
+## Interactive Setup
+
+Run the setup wizard to configure AgentCode:
+
+```python
+from wizard import run_setup_wizard
+
+# Run interactive setup
+preferences = run_setup_wizard()
+```
+
+### Setup Wizard Features
+
+1. **System Scanning**: Detects all AI models on your system
+2. **Priority Selection**: Choose speed, accuracy, privacy, cost, or coding focus
+3. **Model Selection**: Pick primary, fallback, terminal, and multimodal models
+4. **Configuration**: Saves preferences to `~/.agentcode/config.json`
+
+## Session Management
+
+Manage coding sessions with context preservation:
+
+```python
+from sessions import get_session_manager, get_model_switcher
+
+# Create a new session
+manager = get_session_manager()
+session = manager.create_session("mimo", "Create REST API", "python")
+
+# Switch models during session
+switcher = get_model_switcher()
+switcher.switch_model("deepseek")
+
+# Get session statistics
+stats = manager.get_session_stats()
+print(stats)
+```
+
+### Session Features
+
+- **Context Preservation**: Maintain task context across model switches
+- **Progress Tracking**: Track files modified, tests passed, lines written
+- **Model History**: Switch between models and revert if needed
+- **Persistent Storage**: Sessions saved to `~/.agentcode/sessions/`
+
+## Multi-Language Support
+
+AgentCode supports 14+ programming languages:
+
+```python
+from languages import detect_project_language, get_language_template, ProgrammingLanguage
+
+# Detect project language
+language = detect_project_language()
+print(language)  # ProgrammingLanguage.PYTHON
+
+# Generate code template
+template = get_language_template(
+    ProgrammingLanguage.PYTHON,
+    "function",
+    name="calculate_sum",
+    params="a, b",
+    docstring="Calculate sum of two numbers"
+)
+print(template)
+```
+
+### Supported Languages
+
+| Language | Expert Model | Linters | Formatters |
+|----------|--------------|---------|------------|
+| Python | MiMo-V2.5 | flake8, pylint, mypy | black, autopep8 |
+| JavaScript | MiMo-V2.5 | eslint, jshint | prettier |
+| TypeScript | MiMo-V2.5 | tsc, eslint | prettier |
+| Go | Laguna S 2.1 | golangci-lint | gofmt |
+| Rust | Laguna S 2.1 | clippy | rustfmt |
+| Java | Nemotron 3 Ultra | checkstyle, spotbugs | google-java-format |
+| C# | Nemotron 3 Ultra | dotnet format | dotnet format |
+| C++ | Laguna S 2.1 | cppcheck, clang-tidy | clang-format |
+| PHP | Ling-3.0-flash | phpcs, phpstan | php-cs-fixer |
+| Ruby | Ling-3.0-flash | rubocop | rubocop |
+| Swift | MiMo-V2.5 | swiftlint | swiftformat |
+| Kotlin | MiMo-V2.5 | ktlint, detekt | ktlint |
+| Scala | Nemotron 3 Ultra | scalastyle | scalafmt |
+| Shell | Laguna S 2.1 | shellcheck | shfmt |
+
 ## API Reference
 
 ### `route_task(task_description, has_image, context_size, is_local_only) -> ModelType`
@@ -44,9 +161,6 @@ Routes a coding task to the optimal AI model.
 
 **Returns:**
 - `ModelType`: The optimal model for this task
-
-**Raises:**
-- `ValueError`: If task_description is empty
 
 **Example:**
 ```python
@@ -226,8 +340,33 @@ User: "Run locally"
 → North Mini Code (sovereign AI)
 ```
 
+## Configuration
+
+AgentCode saves configuration to `~/.agentcode/config.json`:
+
+```json
+{
+  "version": "0.0.2",
+  "selected_models": {
+    "primary": "mimo",
+    "fallback": ["deepseek", "laguna"],
+    "terminal": "laguna",
+    "multimodal": "mimo",
+    "local": "north"
+  },
+  "user_preferences": {
+    "priority": "speed",
+    "privacy_mode": false,
+    "auto_fallback": true
+  }
+}
+```
+
 ## Links
 
 - GitHub: https://github.com/mrcbrbn5361/agentcode
 - OpenAgentSkill: https://www.openagentskill.com/skills/agentcode
-- Issues: https://github.com/mrcbrbn5361/agentcode/issues
+
+## License
+
+MIT
