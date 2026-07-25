@@ -1,0 +1,109 @@
+{
+  "$schema": "https://www.openagentskill.com/schemas/skill.json",
+  "name": "agentcode",
+  "version": "0.0.1",
+  "description": "7 ücretsiz modelin en iyi yeteneklerini tek çatı altında toplayan akıllı coding agent'ı. Görev türüne göre en uygun modeli otomatik seçer.",
+  "author": {
+    "name": "AgentCode Contributors",
+    "url": "https://github.com/mrcbrbn5361"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrcbrbn5361/agentcode"
+  },
+  "homepage": "https://github.com/mrcbrbn5361/agentcode",
+  "keywords": [
+    "opencode",
+    "coding-agent",
+    "multi-model",
+    "free-models",
+    "ai",
+    "coding",
+    "mimo",
+    "deepseek",
+    "laguna",
+    "ling",
+    "north-mini-code",
+    "nemotron",
+    "big-pickle"
+  ],
+  "categories": [
+    "code-generation",
+    "developer-tools",
+    "coding-agents"
+  ],
+  "platforms": [
+    "opencode"
+  ],
+  "install": {
+    "method": "manual",
+    "command": "mkdir -p ~/.config/opencode/skills/agentcode && curl -fsSL https://raw.githubusercontent.com/mrcbrbn5361/agentcode/main/SKILL.md -o ~/.config/opencode/skills/agentcode/SKILL.md",
+    "alternatives": [
+      {
+        "method": "git-clone",
+        "command": "cd ~/.config/opencode/skills && git clone https://github.com/mrcbrbn5361/agentcode.git"
+      }
+    ]
+  },
+  "models": [
+    {
+      "name": "MiMo-V2.5 Free",
+      "id": "opencode/mimo-v2.5-free",
+      "strength": "Multimodal (Görüntü+Ses+Video)",
+      "context": "1M"
+    },
+    {
+      "name": "DeepSeek V4 Flash Free",
+      "id": "opencode/deepseek-v4-flash-free",
+      "strength": "Hız & Yüksek Hacim",
+      "context": "1M"
+    },
+    {
+      "name": "Laguna S 2.1 Free",
+      "id": "opencode/laguna-s-2.1-free",
+      "strength": "Terminal Coding Agent",
+      "context": "1M"
+    },
+    {
+      "name": "Ling-3.0-flash Free",
+      "id": "opencode/ling-3.0-flash-free",
+      "strength": "Token Verimliliği",
+      "context": "256K"
+    },
+    {
+      "name": "North Mini Code Free",
+      "id": "opencode/north-mini-code-free",
+      "strength": "Yerinde (Local) Deployment",
+      "context": "256K"
+    },
+    {
+      "name": "Nemotron 3 Ultra Free",
+      "id": "opencode/nemotron-3-ultra-free",
+      "strength": "Enterprise Long-Horizon Agent",
+      "context": "1M"
+    },
+    {
+      "name": "Big Pickle",
+      "id": "opencode/big-pickle",
+      "strength": "Günlük Ücretsiz Coding",
+      "context": "200K"
+    }
+  ],
+  "features": [
+    "Otomatik model yönlendirme",
+    "Görev türüne göre en uygun modeli seçme",
+    "Multimodal görev desteği",
+    "Hızlı kod üretimi",
+    "Terminal coding desteği",
+    "Enterprise seviye agent desteği",
+    "Yerinde deployment seçeneği"
+  ],
+  "requirements": {
+    "opencode": ">=1.0.0"
+  },
+  "social": {
+    "github": "https://github.com/mrcbrbn5361/agentcode",
+    "issues": "https://github.com/mrcbrbn5361/agentcode/issues"
+  }
+}
