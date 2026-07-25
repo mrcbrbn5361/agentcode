@@ -2,9 +2,7 @@
 
 ## License (MIT)
 
-MIT License - Copyright (c) 2026 AgentCode Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+MIT License - Copyright (c) 2026 AgentCode Contributors. Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
 
 ## Complete Python Implementation
 
@@ -24,16 +22,11 @@ TERMINAL_KEYWORDS = ["bash", "shell", "docker", "terminal", "cli", "script", "de
 SPEED_KEYWORDS = ["quick", "fast", "rapid", "batch", "multiple"]
 
 def route_task(task_description: str, has_image: bool = False, context_size: int = 0, is_local_only: bool = False) -> ModelType:
-    if has_image:
-        return ModelType.MIMO
-    if any(kw in task_description.lower() for kw in TERMINAL_KEYWORDS):
-        return ModelType.LAGUNA
-    if context_size > 256000:
-        return ModelType.NEMOTRON
-    if is_local_only:
-        return ModelType.NORTH
-    if any(kw in task_description.lower() for kw in SPEED_KEYWORDS):
-        return ModelType.DEEPSEEK
+    if has_image: return ModelType.MIMO
+    if any(kw in task_description.lower() for kw in TERMINAL_KEYWORDS): return ModelType.LAGUNA
+    if context_size > 256000: return ModelType.NEMOTRON
+    if is_local_only: return ModelType.NORTH
+    if any(kw in task_description.lower() for kw in SPEED_KEYWORDS): return ModelType.DEEPSEEK
     return ModelType.LING
 
 def get_model_info(model: ModelType) -> Dict:
@@ -46,18 +39,51 @@ def get_model_info(model: ModelType) -> Dict:
         ModelType.NEMOTRON: {"name": "Nemotron 3 Ultra Free", "provider": "NVIDIA", "strength": "Enterprise"},
     }
     return models.get(model, {})
+```
 
-# Tests
-def test_route_task():
+## Complete Test Suite
+
+```python
+def test_multimodal_routing():
     assert route_task("Fix bug", has_image=True) == ModelType.MIMO
-    assert route_task("Create docker file") == ModelType.LAGUNA
-    assert route_task("Quick code") == ModelType.DEEPSEEK
-    assert route_task("Analyze", context_size=500000) == ModelType.NEMOTRON
-    assert route_task("Run locally", is_local_only=True) == ModelType.NORTH
-    assert route_task("Write function") == ModelType.LING
-    print("All 6 tests passed!")
+    assert route_task("Transcribe", has_image=False) != ModelType.MIMO
 
-test_route_task()
+def test_terminal_routing():
+    assert route_task("Create docker file") == ModelType.LAGUNA
+    assert route_task("Write bash script") == ModelType.LAGUNA
+    assert route_task("Build CLI tool") == ModelType.LAGUNA
+
+def test_speed_routing():
+    assert route_task("Quick code") == ModelType.DEEPSEEK
+    assert route_task("Fast implementation") == ModelType.DEEPSEEK
+
+def test_context_routing():
+    assert route_task("Analyze", context_size=500000) == ModelType.NEMOTRON
+    assert route_task("Analyze", context_size=100000) != ModelType.NEMOTRON
+
+def test_local_routing():
+    assert route_task("Run locally", is_local_only=True) == ModelType.NORTH
+
+def test_default_routing():
+    assert route_task("Write function") == ModelType.LING
+
+def test_model_info():
+    for model in ModelType:
+        info = get_model_info(model)
+        assert "name" in info
+        assert "provider" in info
+
+def run_all_tests():
+    test_multimodal_routing()
+    test_terminal_routing()
+    test_speed_routing()
+    test_context_routing()
+    test_local_routing()
+    test_default_routing()
+    test_model_info()
+    print("All 7 tests passed!")
+
+run_all_tests()
 ```
 
 ## Models
@@ -84,7 +110,14 @@ curl -fsSL https://raw.githubusercontent.com/mrcbrbn5361/agentcode/main/SKILL.md
 User: "Create FastAPI endpoint" → DeepSeek V4 Flash
 User: "Fix UI bug [screenshot]" → MiMo-V2.5
 User: "Create docker compose" → Laguna S 2.1
+User: "Analyze large codebase" → Nemotron 3 Ultra
+User: "Run locally" → North Mini Code
 ```
+
+## API Reference
+
+- `route_task(description, has_image, context_size, is_local_only)` → ModelType
+- `get_model_info(model)` → Dict with name, provider, strength
 
 ## Links
 
