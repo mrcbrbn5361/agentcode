@@ -230,10 +230,10 @@ class CodeTemplateGenerator:
                 "async_function": 'async def {name}({params}):\n    """{docstring}"""\n    pass',
             },
             ProgrammingLanguage.JAVASCRIPT: {
-                "function": 'function {name}({params}) {\n  // {docstring}\n}',
-                "class": 'class {name} {\n  constructor({params}) {\n  }\n}',
-                "test": 'describe("{name}", () => {\n  it("should work", () => {\n    expect({name}()).toBe(expected);\n  });\n});',
-                "arrow_function": 'const {name} = ({params}) => {\n  // {docstring}\n};',
+                "function": 'function {name}({params}) {{\n  // {docstring}\n}}',
+                "class": 'class {name} {{\n  constructor({params}) {{\n  }}\n}}',
+                "test": 'describe("{name}", () => {{\n  it("should work", () => {{\n    expect({name}()).toBe(expected);\n  }});\n}});',
+                "arrow_function": 'const {name} = ({params}) => {{\n  // {docstring}\n}};',
             },
             ProgrammingLanguage.TYPESCRIPT: {
                 "function": 'function {name}({params}): {return_type} {\n  // {docstring}\n}',

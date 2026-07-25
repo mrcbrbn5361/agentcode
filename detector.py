@@ -6,7 +6,7 @@ and presents them for selection with intelligent recommendations.
 """
 
 import os
-import subprocess
+import shutil
 import json
 import platform
 from pathlib import Path
@@ -258,25 +258,34 @@ class SystemDetector:
     
     def _check_command_exists(self, cmd: List[str]) -> bool:
         """Check if a command exists on the system."""
-        try:
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=5,
-            )
-            return result.returncode == 0
-        except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        if not cmd:
             return False
+        command = cmd[0]
+        return shutil.which(command) is not None
     
     def _get_command_version(self, cmd: List[str]) -> Optional[str]:
         """Get version of a command."""
+        if not cmd:
+            return None
+        command = cmd[0]
+        if shutil.which(command) is None:
+            return None
+        
+        # For version detection, we still need to run the command
+        # but only with safe, known arguments
+        import subprocess
         try:
+            # Only allow specific safe commands
+            safe_commands = {"openai", "anthropic", "gemini", "ollama", "llama-cli", "vllm", "lmstudio", "codexbar"}
+            if command not in safe_commands:
+                return None
+            
             result = subprocess.run(
                 cmd,
                 capture_output=True,
                 text=True,
                 timeout=5,
+                shell=False,  # Explicitly disable shell
             )
             if result.returncode == 0:
                 # Extract version from output
@@ -290,15 +299,15 @@ class SystemDetector:
     def _check_ide_installed(self, ide_id: str) -> bool:
         """Check if an IDE is installed."""
         ide_checks = {
-            "vscode": ["which", "code"],
-            "cursor": ["which", "cursor"],
-            "windsurf": ["which", "windsurf"],
-            "jetbrains": ["which", "idea"],
+            "vscode": "code",
+            "cursor": "cursor",
+            "windsurf": "windsurf",
+            "jetbrains": "idea",
         }
         
-        cmd = ide_checks.get(ide_id)
-        if cmd:
-            return self._check_command_exists(cmd)
+        command = ide_checks.get(ide_id)
+        if command:
+            return shutil.which(command) is not None
         return False
     
     def get_models_by_category(self, category: ModelCategory) -> List[DetectedModel]:
