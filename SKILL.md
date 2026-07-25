@@ -1,12 +1,17 @@
 ---
 name: agentcode
-description: "Smart routing across 6 verified free AI models. Auto-selects best model for coding tasks."
+description: "Smart routing across 6 verified free AI models for OpenCode. Auto-selects best model for coding tasks."
 license: MIT
+version: "0.0.1"
+author: "AgentCode Contributors"
+category: "coding-agent"
 ---
 
-# AgentCode
+# AgentCode - Smart Multi-Model Coding Agent
 
-Routes coding tasks to the best free AI model automatically.
+## What It Does
+
+AgentCode routes coding tasks to the best free AI model automatically.
 
 ## Models
 
@@ -28,24 +33,30 @@ curl -fsSL https://raw.githubusercontent.com/mrcbrbn5361/agentcode/main/SKILL.md
 
 ## Usage
 
-```
-User: "Create FastAPI endpoint"
-→ DeepSeek V4 Flash
+```python
+from agentcode import route_task, ModelType
 
-User: "Fix UI bug [screenshot]"
-→ MiMo-V2.5
-
-User: "Create docker compose"
-→ Laguna S 2.1
+model = route_task("Create FastAPI endpoint")
+print(model)  # ModelType.DEEPSEEK
 ```
 
-## Routing
+## API
 
-1. Multimodal → MiMo-V2.5
-2. Terminal → Laguna S 2.1
-3. Speed → DeepSeek V4 Flash
-4. Large context → Nemotron 3 Ultra
-5. Local → North Mini Code
+### `route_task(task_description, has_image=False, context_size=0, is_local_only=False) -> ModelType`
+
+Routes a task to the optimal model.
+
+### `get_model_info(model: ModelType) -> Dict`
+
+Gets model information (name, provider, strength).
+
+## Routing Rules
+
+1. Image/Audio → MiMo-V2.5
+2. Docker/Bash → Laguna S 2.1
+3. Speed keywords → DeepSeek V4 Flash
+4. Context >256K → Nemotron 3 Ultra
+5. Local only → North Mini Code
 6. Default → Ling-3.0-flash
 
 ## License

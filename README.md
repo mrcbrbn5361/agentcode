@@ -1,21 +1,84 @@
-# AgentCode
+# AgentCode - Smart Multi-Model Coding Agent
 
-Smart routing across 6 verified free AI models. MIT License.
+Smart routing across 6 verified free AI models for OpenCode. MIT License.
 
-## Install
+## Installation
 
 ```bash
+# Create skill directory
 mkdir -p ~/.config/opencode/skills/agentcode
-curl -fsSL https://raw.githubusercontent.com/mrcbrbn5361/agentcode/main/SKILL.md -o ~/.config/opencode/skills/agentcode/SKILL.md
+
+# Download SKILL.md
+curl -fsSL https://raw.githubusercontent.com/mrcbrbn5361/agentcode/main/SKILL.md \
+  -o ~/.config/opencode/skills/agentcode/SKILL.md
+
+# Restart OpenCode
+opencode
 ```
 
-## Complete Code
+## Quick Start
+
+```python
+from agentcode import route_task, get_model_info, ModelType
+
+# Route a task to the best model
+model = route_task("Create FastAPI endpoint")
+print(model)  # ModelType.DEEPSEEK
+
+# Get model information
+info = get_model_info(ModelType.MIMO)
+print(info["name"])  # "MiMo-V2.5"
+```
+
+## API Reference
+
+### `route_task(task_description, has_image, context_size, is_local_only) -> ModelType`
+
+Routes a coding task to the optimal AI model.
+
+**Parameters:**
+- `task_description` (str): Description of the coding task
+- `has_image` (bool, optional): Whether task includes image input. Default: False
+- `context_size` (int, optional): Estimated context size in tokens. Default: 0
+- `is_local_only` (bool, optional): Whether task requires local processing. Default: False
+
+**Returns:**
+- `ModelType`: The optimal model for this task
+
+**Raises:**
+- `ValueError`: If task_description is empty
+
+**Example:**
+```python
+model = route_task("Create docker compose file")
+# Returns: ModelType.LAGUNA
+```
+
+### `get_model_info(model: ModelType) -> Dict`
+
+Gets information about a model.
+
+**Parameters:**
+- `model` (ModelType): The model type to get info about
+
+**Returns:**
+- `Dict`: Dictionary with keys: name, provider, strength
+
+**Example:**
+```python
+info = get_model_info(ModelType.DEEPSEEK)
+# Returns: {"name": "DeepSeek V4 Flash", "provider": "DeepSeek", "strength": "Speed"}
+```
+
+## Complete Python Implementation
 
 ```python
 from enum import Enum
-from typing import Dict
+from typing import Dict, List, Optional
+
 
 class ModelType(str, Enum):
+    """Available AI model types."""
     MIMO = "opencode/mimo-v2.5-free"
     DEEPSEEK = "opencode/deepseek-v4-flash-free"
     LAGUNA = "opencode/laguna-s-2.1-free"
@@ -23,59 +86,148 @@ class ModelType(str, Enum):
     NORTH = "opencode/north-mini-code-free"
     NEMOTRON = "opencode/nemotron-3-ultra-free"
 
-TERMINAL = ["bash", "shell", "docker", "terminal", "cli", "script", "deploy"]
-SPEED = ["quick", "fast", "rapid", "batch"]
 
-def route_task(desc: str, img: bool = False, ctx: int = 0, local: bool = False) -> ModelType:
-    if img: return ModelType.MIMO
-    if any(k in desc.lower() for k in TERMINAL): return ModelType.LAGUNA
-    if ctx > 256000: return ModelType.NEMOTRON
-    if local: return ModelType.NORTH
-    if any(k in desc.lower() for k in SPEED): return ModelType.DEEPSEEK
+TERMINAL_KEYWORDS: List[str] = ["bash", "shell", "docker", "terminal", "cli", "script", "deploy"]
+SPEED_KEYWORDS: List[str] = ["quick", "fast", "rapid", "batch"]
+
+
+def route_task(
+    task_description: str,
+    has_image: bool = False,
+    context_size: int = 0,
+    is_local_only: bool = False
+) -> ModelType:
+    """Route a task to the optimal AI model."""
+    if not task_description:
+        raise ValueError("task_description cannot be empty")
+    
+    if has_image:
+        return ModelType.MIMO
+    if any(kw in task_description.lower() for kw in TERMINAL_KEYWORDS):
+        return ModelType.LAGUNA
+    if context_size > 256000:
+        return ModelType.NEMOTRON
+    if is_local_only:
+        return ModelType.NORTH
+    if any(kw in task_description.lower() for kw in SPEED_KEYWORDS):
+        return ModelType.DEEPSEEK
     return ModelType.LING
 
-def get_model_info(m: ModelType) -> Dict:
-    d = {
-        ModelType.MIMO: {"name": "MiMo-V2.5", "provider": "Xiaomi"},
-        ModelType.DEEPSEEK: {"name": "DeepSeek V4 Flash", "provider": "DeepSeek"},
-        ModelType.LAGUNA: {"name": "Laguna S 2.1", "provider": "NVIDIA"},
-        ModelType.LING: {"name": "Ling-3.0-flash", "provider": "Alibaba"},
-        ModelType.NORTH: {"name": "North Mini Code", "provider": "NVIDIA"},
-        ModelType.NEMOTRON: {"name": "Nemotron 3 Ultra", "provider": "NVIDIA"},
-    }
-    return d.get(m, {})
 
-# Tests
-assert route_task("Fix bug", img=True) == ModelType.MIMO
-assert route_task("Create docker") == ModelType.LAGUNA
-assert route_task("Quick code") == ModelType.DEEPSEEK
-assert route_task("Analyze", ctx=500000) == ModelType.NEMOTRON
-assert route_task("Run locally", local=True) == ModelType.NORTH
-assert route_task("Write func") == ModelType.LING
-for m in ModelType: assert "name" in get_model_info(m)
-print("All tests passed!")
+def get_model_info(model: ModelType) -> Dict[str, str]:
+    """Get information about a model."""
+    models: Dict[ModelType, Dict[str, str]] = {
+        ModelType.MIMO: {"name": "MiMo-V2.5", "provider": "Xiaomi", "strength": "Multimodal"},
+        ModelType.DEEPSEEK: {"name": "DeepSeek V4 Flash", "provider": "DeepSeek", "strength": "Speed"},
+        ModelType.LAGUNA: {"name": "Laguna S 2.1", "provider": "NVIDIA", "strength": "Terminal"},
+        ModelType.LING: {"name": "Ling-3.0-flash", "provider": "Alibaba", "strength": "Efficiency"},
+        ModelType.NORTH: {"name": "North Mini Code", "provider": "NVIDIA", "strength": "Local"},
+        ModelType.NEMOTRON: {"name": "Nemotron 3 Ultra", "provider": "NVIDIA", "strength": "Enterprise"},
+    }
+    return models.get(model, {})
+```
+
+## Test Suite
+
+```python
+from agentcode import route_task, get_model_info, ModelType
+import pytest
+
+
+def test_multimodal_routing():
+    """Test multimodal task routing."""
+    assert route_task("Fix bug", has_image=True) == ModelType.MIMO
+    assert route_task("Transcribe audio", has_image=True) == ModelType.MIMO
+
+
+def test_terminal_routing():
+    """Test terminal/CLI task routing."""
+    assert route_task("Create docker file") == ModelType.LAGUNA
+    assert route_task("Write bash script") == ModelType.LAGUNA
+    assert route_task("Build CLI tool") == ModelType.LAGUNA
+
+
+def test_speed_routing():
+    """Test speed-critical task routing."""
+    assert route_task("Quick code") == ModelType.DEEPSEEK
+    assert route_task("Fast implementation") == ModelType.DEEPSEEK
+
+
+def test_context_routing():
+    """Test large context task routing."""
+    assert route_task("Analyze code", context_size=500000) == ModelType.NEMOTRON
+    assert route_task("Analyze code", context_size=100000) != ModelType.NEMOTRON
+
+
+def test_local_routing():
+    """Test local-only task routing."""
+    assert route_task("Run locally", is_local_only=True) == ModelType.NORTH
+
+
+def test_default_routing():
+    """Test default task routing."""
+    assert route_task("Write function") == ModelType.LING
+    assert route_task("Create API") == ModelType.LING
+
+
+def test_empty_description():
+    """Test empty description raises error."""
+    with pytest.raises(ValueError):
+        route_task("")
+
+
+def test_model_info():
+    """Test model info retrieval."""
+    for model in ModelType:
+        info = get_model_info(model)
+        assert "name" in info
+        assert "provider" in info
+        assert "strength" in info
+
+
+def test_model_info_unknown():
+    """Test unknown model returns empty dict."""
+    info = get_model_info("unknown")
+    assert info == {}
+
+
+# Run tests
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
 ```
 
 ## Models
 
-| Model | Provider | Best For |
-|-------|----------|----------|
-| MiMo-V2.5 | Xiaomi | Multimodal |
-| DeepSeek V4 Flash | DeepSeek | Speed |
-| Laguna S 2.1 | NVIDIA | Terminal |
-| Ling-3.0-flash | Alibaba | Efficiency |
-| North Mini Code | NVIDIA | Local |
-| Nemotron 3 Ultra | NVIDIA | Enterprise |
+| Model | Provider | Best For | Context |
+|-------|----------|----------|---------|
+| MiMo-V2.5 | Xiaomi | Multimodal | 1M |
+| DeepSeek V4 Flash | DeepSeek | Speed (126 tok/s) | 1M |
+| Laguna S 2.1 | NVIDIA | Terminal | 1M |
+| Ling-3.0-flash | Alibaba | Efficiency | 256K |
+| North Mini Code | NVIDIA | Local | 256K |
+| Nemotron 3 Ultra | NVIDIA | Enterprise | 1M |
 
-## Usage
+## Usage Examples
 
 ```
-"Create FastAPI endpoint" → DeepSeek V4 Flash
-"Fix UI bug [screenshot]" → MiMo-V2.5
-"Create docker compose" → Laguna S 2.1
+User: "Create FastAPI endpoint"
+→ DeepSeek V4 Flash (fastest at 126 tokens/s)
+
+User: "Fix UI bug [screenshot]"
+→ MiMo-V2.5 (multimodal support)
+
+User: "Create docker compose"
+→ Laguna S 2.1 (terminal expert)
+
+User: "Analyze large codebase"
+→ Nemotron 3 Ultra (1M context)
+
+User: "Run locally"
+→ North Mini Code (sovereign AI)
 ```
 
 ## Links
 
 - GitHub: https://github.com/mrcbrbn5361/agentcode
 - OpenAgentSkill: https://www.openagentskill.com/skills/agentcode
+- Issues: https://github.com/mrcbrbn5361/agentcode/issues
