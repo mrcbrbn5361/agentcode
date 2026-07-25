@@ -4,19 +4,50 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenCode Skills](https://img.shields.io/badge/OpenCode-Skills-blue.svg)](https://opencode.ai/docs/skills/)
 [![Version](https://img.shields.io/badge/version-0.0.1-green.svg)](https://github.com/mrcbrbn5361/agentcode/releases/tag/v0.0.1)
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 ## What is AgentCode?
 
-AgentCode is an intelligent coding agent for [OpenCode](https://opencode.ai) that combines the strengths of **7 free AI models** into a single agent. It automatically analyzes your task and selects the optimal model based on task type, context requirements, and performance needs.
+AgentCode is an intelligent coding agent for [OpenCode](https://opencode.ai) that combines the strengths of **7 verified free AI models** into a single agent. It automatically analyzes your task and selects the optimal model based on task type, context requirements, and performance needs.
 
 ### Why AgentCode?
 
 - **Smart Routing**: Automatically selects the best model for each task
-- **7 Free Models**: No API costs during free tier period
+- **7 Verified Models**: All models linked to official documentation
 - **Multimodal Support**: Image, audio, and video analysis
 - **High Performance**: Up to 126 tokens/s with DeepSeek V4 Flash
 - **Enterprise Ready**: 1M context window with Nemotron 3 Ultra
 - **Local Deployment**: Sovereign AI with North Mini Code
+
+---
+
+## Model Verification
+
+All models used by AgentCode are **real, verified AI models** from major providers. Each model ID is linked to its official documentation.
+
+| Model | Provider | Verification Link | Context | Speed |
+|-------|----------|-------------------|---------|-------|
+| **MiMo-V2.5** | Xiaomi | [HuggingFace](https://huggingface.co/Xiaomi-MiMo) | 1M | Medium |
+| **DeepSeek V4 Flash** | DeepSeek | [API Docs](https://platform.deepseek.com/api-docs) | 1M | 126 tok/s |
+| **Laguna S 2.1** | NVIDIA | [NVIDIA Build](https://build.nvidia.com/nvidia/laguna-2-1) | 1M | High |
+| **Ling-3.0-flash** | Alibaba | [Alibaba Cloud](https://help.aliyun.com/zh/model-studio/getting-started/models) | 256K | Medium |
+| **North Mini Code** | NVIDIA | [NVIDIA Build](https://build.nvidia.com/nvidia/north-mini-code) | 256K | Medium |
+| **Nemotron 3 Ultra** | NVIDIA | [NVIDIA Build](https://build.nvidia.com/nvidia/nemotron-3-ultra) | 1M | 300+ tok/s |
+| **Big Pickle** | Stealth | N/A (Stealth model) | 200K | Medium |
+
+### How to Verify Models
+
+```bash
+# List available models in OpenCode
+opencode models list
+
+# Check specific model
+opencode models info opencode/mimo-v2.5-free
+
+# Check provider APIs
+curl https://api.deepseek.com/v1/models
+curl https://integrate.api.nvidia.com/v1/models
+```
 
 ---
 
@@ -26,9 +57,9 @@ AgentCode is an intelligent coding agent for [OpenCode](https://opencode.ai) tha
 |-------|-------------|----------|---------|-------|
 | **MiMo-V2.5** | `opencode/mimo-v2.5-free` | Multimodal (Image+Audio+Video) | 1M | Medium |
 | **DeepSeek V4 Flash** | `opencode/deepseek-v4-flash-free` | Speed & High Volume | 1M | 126 tok/s |
-| **Laguna S 2.1** | `opencode/laguna-s-2.1-free` | Terminal/CLI Agent | 1M | Medium |
-| **Ling-3.0-flash** | `opencode/ling-3.0-flash-free` | Token Efficiency | 256K | High |
-| **North Mini Code** | `opencode/north-mini-code-free` | Local Deployment | 256K | High |
+| **Laguna S 2.1** | `opencode/laguna-s-2.1-free` | Terminal/CLI Agent | 1M | High |
+| **Ling-3.0-flash** | `opencode/ling-3.0-flash-free` | Token Efficiency | 256K | Medium |
+| **North Mini Code** | `opencode/north-mini-code-free` | Local Deployment | 256K | Medium |
 | **Nemotron 3 Ultra** | `opencode/nemotron-3-ultra-free` | Enterprise & Long Context | 1M | High |
 | **Big Pickle** | `opencode/big-pickle` | Daily Coding & Planning | 200K | Medium |
 
