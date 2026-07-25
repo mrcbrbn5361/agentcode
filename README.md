@@ -1,5 +1,10 @@
 # AgentCode - Smart Multi-Model Coding Agent
 
+[![Listed on OpenAgentSkill](https://www.openagentskill.com/api/badge/mrcbrbn5361-agentcode?metric=listed&label=Listed)](https://www.openagentskill.com/skills/mrcbrbn5361-agentcode)
+[![OpenAgentSkill Trust](https://www.openagentskill.com/api/badge/mrcbrbn5361-agentcode?metric=trust&label=Trust)](https://www.openagentskill.com/skills/mrcbrbn5361-agentcode)
+[![OpenAgentSkill Audit](https://www.openagentskill.com/api/badge/mrcbrbn5361-agentcode?metric=audit&label=Audit)](https://www.openagentskill.com/skills/mrcbrbn5361-agentcode/audit)
+[![Agent Proven](https://www.openagentskill.com/api/badge/mrcbrbn5361-agentcode?metric=proven&label=Agent%20Proven)](https://www.openagentskill.com/skills/mrcbrbn5361-agentcode)
+
 Intelligent routing across 7 verified free AI models with system detection and multi-language support. MIT License.
 
 ## What's New in v0.0.2
