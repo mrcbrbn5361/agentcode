@@ -2,7 +2,7 @@
   "$schema": "https://www.openagentskill.com/schemas/skill.json",
   "name": "agentcode",
   "version": "0.0.1",
-  "description": "7 ücretsiz modelin en iyi yeteneklerini tek çatı altında toplayan akıllı coding agent'ı. Görev türüne göre en uygun modeli otomatik seçer.",
+  "description": "Intelligent coding agent combining 7 free AI models with smart routing. Auto-selects best model based on task type for optimal performance.",
   "author": {
     "name": "AgentCode Contributors",
     "url": "https://github.com/mrcbrbn5361"
@@ -26,12 +26,18 @@
     "ling",
     "north-mini-code",
     "nemotron",
-    "big-pickle"
+    "big-pickle",
+    "smart-routing",
+    "code-generation",
+    "terminal-agent",
+    "multimodal"
   ],
   "categories": [
     "code-generation",
     "developer-tools",
-    "coding-agents"
+    "coding-agents",
+    "ai-routing",
+    "productivity"
   ],
   "platforms": [
     "opencode"
@@ -50,60 +56,118 @@
     {
       "name": "MiMo-V2.5 Free",
       "id": "opencode/mimo-v2.5-free",
-      "strength": "Multimodal (Görüntü+Ses+Video)",
-      "context": "1M"
+      "description": "Multimodal coding agent with native image, audio, and video understanding",
+      "strength": "Multimodal (Image+Audio+Video)",
+      "context": "1M",
+      "speed": "High",
+      "use_cases": ["multimodal-tasks", "image-analysis", "audio-processing", "video-analysis"]
     },
     {
       "name": "DeepSeek V4 Flash Free",
       "id": "opencode/deepseek-v4-flash-free",
-      "strength": "Hız & Yüksek Hacim",
-      "context": "1M"
+      "description": "High-speed code generation with 126 tokens/s performance",
+      "strength": "Speed & High Volume",
+      "context": "1M",
+      "speed": "Very High (126 tok/s)",
+      "use_cases": ["quick-code", "batch-processing", "rapid-prototyping"]
     },
     {
       "name": "Laguna S 2.1 Free",
       "id": "opencode/laguna-s-2.1-free",
+      "description": "Terminal/CLI task specialist with Terminal-Bench 70.2% score",
       "strength": "Terminal Coding Agent",
-      "context": "1M"
+      "context": "1M",
+      "speed": "High",
+      "use_cases": ["terminal-tasks", "cli-tools", "docker", "swe-bench"]
     },
     {
       "name": "Ling-3.0-flash Free",
       "id": "opencode/ling-3.0-flash-free",
-      "strength": "Token Verimliliği",
-      "context": "256K"
+      "description": "Most token-efficient model with 5.1B active parameters",
+      "strength": "Token Efficiency",
+      "context": "256K",
+      "speed": "Medium",
+      "use_cases": ["cost-optimization", "high-volume", "budget-tasks"]
     },
     {
       "name": "North Mini Code Free",
       "id": "opencode/north-mini-code-free",
-      "strength": "Yerinde (Local) Deployment",
-      "context": "256K"
+      "description": "Local deployment model running on single H100 GPU",
+      "strength": "Local Deployment",
+      "context": "256K",
+      "speed": "Medium",
+      "use_cases": ["local-processing", "sensitive-data", "sovereign-ai"]
     },
     {
       "name": "Nemotron 3 Ultra Free",
       "id": "opencode/nemotron-3-ultra-free",
+      "description": "Enterprise-grade model with 550B parameters and 1M context",
       "strength": "Enterprise Long-Horizon Agent",
-      "context": "1M"
+      "context": "1M",
+      "speed": "High (300+ tok/s)",
+      "use_cases": ["enterprise", "large-codebase", "complex-reasoning"]
     },
     {
       "name": "Big Pickle",
       "id": "opencode/big-pickle",
-      "strength": "Günlük Ücretsiz Coding",
-      "context": "200K"
+      "description": "Free model for daily coding and quick planning tasks",
+      "strength": "Daily Coding",
+      "context": "200K",
+      "speed": "Medium",
+      "use_cases": ["planning", "quick-tasks", "exploration"]
     }
   ],
   "features": [
-    "Otomatik model yönlendirme",
-    "Görev türüne göre en uygun modeli seçme",
-    "Multimodal görev desteği",
-    "Hızlı kod üretimi",
-    "Terminal coding desteği",
-    "Enterprise seviye agent desteği",
-    "Yerinde deployment seçeneği"
+    "Smart model routing based on task analysis",
+    "Automatic model selection for optimal performance",
+    "Multimodal task support (image, audio, video)",
+    "High-speed code generation (up to 126 tokens/s)",
+    "Terminal/CLI task expertise",
+    "Enterprise-grade long-context support",
+    "Local deployment option for sensitive data",
+    "Cost-efficient processing with free models",
+    "Context size-based routing decisions"
   ],
+  "routing_logic": {
+    "description": "Intelligent routing based on task type, context size, speed requirements, and privacy needs",
+    "factors": [
+      "Task type (code, analysis, planning, multimodal)",
+      "Context size (<256K vs 1M)",
+      "Speed requirement (real-time vs batch)",
+      "Cost sensitivity (free tier vs premium)",
+      "Privacy needs (cloud vs local)"
+    ]
+  },
+  "security": {
+    "data_policy": "Varies by model - free models may use data for training",
+    "recommendations": [
+      "Never use free models for confidential code",
+      "Use North Mini Code for sensitive projects",
+      "Verify outputs before deployment",
+      "Review model selection before execution"
+    ],
+    "local_models": ["North Mini Code"],
+    "enterprise_models": ["Nemotron 3 Ultra"],
+    "stealth_models": ["Big Pickle"]
+  },
+  "compliance": {
+    "license": "MIT",
+    "open_source": true,
+    "data_collection": false,
+    "model_data_usage": "Varies by provider"
+  },
   "requirements": {
     "opencode": ">=1.0.0"
   },
+  "documentation": {
+    "readme": "https://github.com/mrcbrbn5361/agentcode/blob/main/README.md",
+    "changelog": "https://github.com/mrcbrbn5361/agentcode/blob/main/CHANGELOG.md",
+    "contributing": "https://github.com/mrcbrbn5361/agentcode/blob/main/CONTRIBUTING.md",
+    "security": "https://github.com/mrcbrbn5361/agentcode/blob/main/SECURITY.md"
+  },
   "social": {
     "github": "https://github.com/mrcbrbn5361/agentcode",
-    "issues": "https://github.com/mrcbrbn5361/agentcode/issues"
+    "issues": "https://github.com/mrcbrbn5361/agentcode/issues",
+    "openagentskill": "https://www.openagentskill.com/skills/agentcode"
   }
 }
